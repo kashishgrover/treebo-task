@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, TouchableOpacity, ActivityIndicator, FlatList } from 'react-native';
-import { observer, inject } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import { Toast } from 'native-base';
 import * as _ from 'lodash';
 
@@ -13,8 +13,8 @@ export default class HotelFeed extends React.Component {
     super(props);
     this.state = {
       loadingHotels: true,
-      loadingPrices: true,
       loadingImages: true,
+      loadingPrices: true,
     };
     this.hotels = [];
   }
@@ -35,19 +35,58 @@ export default class HotelFeed extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.props.hotelStore
+      .fetchHotelPrices()
+      .then(res => {
+        if (res === 200) {
+          this.setState({
+            loadingPrices: false,
+          });
+        }
+      })
+      .catch(e => {
+        console.warn(e);
+        Toast.show({
+          text: "An error occurred while loading. :'(",
+          type: 'warning',
+        });
+      });
+
+    this.props.hotelStore
+      .fetchHotelImages()
+      .then(res => {
+        if (res === 200) {
+          this.setState({
+            loadingImages: false,
+          });
+        }
+      })
+      .catch(e => {
+        console.warn(e);
+        Toast.show({
+          text: "An error occurred while loading. :'(",
+          type: 'warning',
+        });
+      });
+  }
+
   render() {
-    console.log('render');
     return this.state.loadingHotels ? (
       <ActivityIndicator size="large" />
     ) : (
       <FlatList
         keyExtractor={item => item.name}
         data={_.values(this.props.hotelStore.hotels)}
-        renderItem={data => <HotelCard data={data} navigation={this.props.navigation} />}
-        contentContainerStyle={{ flexGrow: 1, overflow: 'hidden' }}
-        showsVerticalScrollIndicator={false}
-        automaticallyAdjustContentInsets={false}
-        removeClippedSubviews={false}
+        renderItem={data => (
+          <HotelCard
+            loadingPrices={this.state.loadingPrices}
+            loadingImages={this.state.loadingImages}
+            data={data}
+            navigation={this.props.navigation}
+          />
+        )}
+        scrollEnabled={false}
       />
     );
   }

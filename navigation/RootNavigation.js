@@ -1,11 +1,16 @@
 import React from 'react';
 import { StackNavigator } from 'react-navigation';
-import MainTabNavigator from './MainTabNavigator';
+
+import HomeScreen from '../screens/HomeScreen';
+import ProductScreen from '../screens/ProductScreen';
 
 const RootStackNavigator = StackNavigator(
   {
     Main: {
-      screen: MainTabNavigator,
+      screen: HomeScreen,
+    },
+    Product: {
+      screen: ProductScreen,
     },
   },
   {

@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "Treebo Task",
+    "description": "Robot voice: Tree Bop... task *-*",
+    "slug": "treebo-task",
+    "privacy": "unlisted",
+    "sdkVersion": "25.0.0",
+    "platforms": ["ios", "android"],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "androidStatusBar": {
+      "barStyle": "light-content",
+      "backgroundColor": "#000"
+    },
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": false
+    }
+  }
+}

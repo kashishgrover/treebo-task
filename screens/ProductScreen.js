@@ -5,7 +5,7 @@ export default class ProductPage extends React.Component {
   render() {
     return (
       <View>
-        <Text>Home Screen</Text>
+        <Text>Product Screen</Text>
       </View>
     );
   }

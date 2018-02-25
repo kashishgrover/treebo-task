@@ -1,5 +1,5 @@
-import Store from './Store';
+import ProductStore from './ProductStore';
 
 export default {
-  store: new Store(),
+  productStore: new ProductStore(),
 };

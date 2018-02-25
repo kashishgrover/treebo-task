@@ -35,11 +35,6 @@ export default class HotelFeed extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this.props.hotelStore.fetchHotelPrices();
-    this.props.hotelStore.fetchHotelImages();
-  }
-
   render() {
     console.log('render');
     return this.state.loadingHotels ? (

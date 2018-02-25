@@ -1,11 +1,55 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Text, View, Image } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, View, Image, ActivityIndicator } from 'react-native';
+import { observer, inject } from 'mobx-react';
+import { Toast } from 'native-base';
 import Layout from '../../constants/Layout';
 
+@inject('hotelStore')
+@observer
 export default class HotelCard extends React.Component {
   constructor(props) {
     super(props);
     this.loadHotelDetails = this.loadHotelDetails.bind(this);
+    this.state = {
+      imageLoading: true,
+      priceLoading: true,
+    };
+  }
+
+  componentWillMount() {
+    this.props.hotelStore
+      .fetchHotelPrices()
+      .then(res => {
+        if (res === 200) {
+          this.setState({
+            priceLoading: false,
+          });
+        }
+      })
+      .catch(e => {
+        console.warn(e);
+        Toast.show({
+          text: "An error occurred while loading. :'(",
+          type: 'warning',
+        });
+      });
+
+    this.props.hotelStore
+      .fetchHotelImages()
+      .then(res => {
+        if (res === 200) {
+          this.setState({
+            imageLoading: false,
+          });
+        }
+      })
+      .catch(e => {
+        console.warn(e);
+        Toast.show({
+          text: "An error occurred while loading. :'(",
+          type: 'warning',
+        });
+      });
   }
 
   loadHotelDetails(item) {
@@ -26,7 +70,13 @@ export default class HotelCard extends React.Component {
         activeOpacity={0.8}
         style={styles.container}
         onPress={() => this.loadHotelDetails(this.props.data.item)}>
-        <Image source={{ uri: image }} style={styles.image} />
+        <View style={styles.imageWrapper}>
+          {this.state.imageLoading ? (
+            <ActivityIndicator />
+          ) : (
+            <Image source={{ uri: image }} style={styles.image} />
+          )}
+        </View>
         <View style={styles.textContainer}>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.h1}>
             {name}
@@ -51,10 +101,15 @@ const styles = StyleSheet.create({
     elevation: 1,
     flexDirection: 'row',
   },
+  imageWrapper: {
+    height: 100,
+    width: leftWidth,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   image: {
     height: 100,
     width: leftWidth,
-    borderWidth: 1,
   },
   textContainer: {
     width: 200,

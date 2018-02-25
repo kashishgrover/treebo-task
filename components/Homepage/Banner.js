@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
   container: {
     height: HEIGHT,
     width: WIDTH,
+    marginBottom: 24,
   },
   backgroundContainer: {
     position: 'absolute',

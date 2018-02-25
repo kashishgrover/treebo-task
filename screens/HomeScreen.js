@@ -9,7 +9,7 @@ export default class HomeScreen extends React.Component {
     return (
       <ScrollView>
         <Banner />
-        <HotelFeed />
+        <HotelFeed navigation={this.props.navigation} />
       </ScrollView>
     );
   }

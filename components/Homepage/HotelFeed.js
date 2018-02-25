@@ -4,13 +4,14 @@ import { observer, inject } from 'mobx-react';
 import { Toast } from 'native-base';
 import * as _ from 'lodash';
 
+import HotelCard from './HotelCard';
+
 @inject('hotelStore')
 @observer
 export default class HotelFeed extends React.Component {
   constructor(props) {
     super(props);
     this.state = { loading: true };
-    this.loadHotelDetails = this.loadHotelDetails.bind(this);
     this.hotels = [];
   }
 
@@ -30,10 +31,6 @@ export default class HotelFeed extends React.Component {
     }
   }
 
-  loadHotelDetails(item) {
-    this.props.navigation.navigate('Product', item);
-  }
-
   render() {
     return this.state.loading ? (
       <ActivityIndicator size="large" />
@@ -41,20 +38,7 @@ export default class HotelFeed extends React.Component {
       <FlatList
         keyExtractor={item => item.name}
         data={_.values(this.props.hotelStore.hotels)}
-        renderItem={data => {
-          return (
-            <TouchableOpacity
-              activeOpacity={0.8}
-              style={{
-                margin: 12,
-                elevation: 2,
-                borderRadius: 8,
-              }}
-              onPress={() => this.loadHotelDetails(data.item)}>
-              <Text>{data.item.name}</Text>
-            </TouchableOpacity>
-          );
-        }}
+        renderItem={data => <HotelCard data={data} navigation={this.props.navigation} />}
         contentContainerStyle={{ flexGrow: 1, overflow: 'hidden' }}
         showsVerticalScrollIndicator={false}
         automaticallyAdjustContentInsets={false}

@@ -2,7 +2,7 @@ import React from 'react';
 import { StackNavigator } from 'react-navigation';
 
 import HomeScreen from '../screens/HomeScreen';
-import ProductScreen from '../screens/ProductScreen';
+import HotelScreen from '../screens/HotelScreen';
 
 const RootStackNavigator = StackNavigator(
   {
@@ -10,7 +10,7 @@ const RootStackNavigator = StackNavigator(
       screen: HomeScreen,
     },
     Product: {
-      screen: ProductScreen,
+      screen: HotelScreen,
     },
   },
   {

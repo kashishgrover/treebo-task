@@ -1,5 +1,5 @@
-import ProductStore from './ProductStore';
+import HotelStore from './HotelStore';
 
 export default {
-  productStore: new ProductStore(),
+  hotelStore: new HotelStore(),
 };

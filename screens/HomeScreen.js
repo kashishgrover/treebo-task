@@ -4,7 +4,7 @@ import { observer, inject } from 'mobx-react';
 import { Toast } from 'native-base';
 import * as _ from 'lodash';
 
-@inject('productStore')
+@inject('hotelStore')
 @observer
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -16,7 +16,7 @@ export default class HomeScreen extends React.Component {
 
   async componentWillMount() {
     try {
-      let res = await this.props.productStore.fetchHotels();
+      let res = await this.props.hotelStore.fetchHotels();
       if (res === 200) {
         this.setState({ loading: false });
       } else {
@@ -42,7 +42,7 @@ export default class HomeScreen extends React.Component {
         ) : (
           <FlatList
             keyExtractor={item => item.name}
-            data={_.values(this.props.productStore.hotels)}
+            data={_.values(this.props.hotelStore.hotels)}
             renderItem={data => {
               console.log(data);
               return (

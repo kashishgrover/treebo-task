@@ -5,7 +5,7 @@ const GET_LIST_URL = Strings.baseUrl + '/5a7f23442e00005000b56873';
 const GET_PRICES_URL = Strings.baseUrl + '/5a7f24f02e00005200b56875';
 const GET_HOTEL_DETAILS_URL = Strings.baseUrl + '/5a7f265b2e00005d00b56877';
 
-export default class ProductStore {
+export default class HotelStore {
   @observable hotels = {};
 
   async fetchHotels() {

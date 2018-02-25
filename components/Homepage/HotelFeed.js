@@ -11,7 +11,11 @@ import HotelCard from './HotelCard';
 export default class HotelFeed extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { loading: true };
+    this.state = {
+      loadingHotels: true,
+      loadingPrices: true,
+      loadingImages: true,
+    };
     this.hotels = [];
   }
 
@@ -19,7 +23,7 @@ export default class HotelFeed extends React.Component {
     try {
       let res = await this.props.hotelStore.fetchHotels();
       if (res === 200) {
-        this.setState({ loading: false });
+        this.setState({ loadingHotels: false });
       } else {
         Toast.show({
           text: "An error occurred while loading. :'(",
@@ -31,8 +35,14 @@ export default class HotelFeed extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.props.hotelStore.fetchHotelPrices();
+    this.props.hotelStore.fetchHotelImages();
+  }
+
   render() {
-    return this.state.loading ? (
+    console.log('render');
+    return this.state.loadingHotels ? (
       <ActivityIndicator size="large" />
     ) : (
       <FlatList

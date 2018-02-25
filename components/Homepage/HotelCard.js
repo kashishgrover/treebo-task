@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, View, Image } from 'react-native';
 import Layout from '../../constants/Layout';
 
 export default class HotelCard extends React.Component {
@@ -12,15 +12,21 @@ export default class HotelCard extends React.Component {
     this.props.navigation.navigate('Product', item);
   }
 
+  getMinPrice(price) {
+    console.log(price);
+  }
+
   render() {
-    const { name, city, locality } = this.props.data.item;
+    const { name, city, locality, image, price } = this.props.data.item;
+    let minPrice;
+    if (price) minPrice = this.getMinPrice(price);
 
     return (
       <TouchableOpacity
         activeOpacity={0.8}
         style={styles.container}
         onPress={() => this.loadHotelDetails(this.props.data.item)}>
-        <View style={styles.image} />
+        <Image source={{ uri: image }} style={styles.image} />
         <View style={styles.textContainer}>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.h1}>
             {name}

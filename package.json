@@ -7,6 +7,9 @@
   "jest": {
     "preset": "jest-expo"
   },
+  "eslintConfig": {
+    "extends": "universe/native"
+  },
   "dependencies": {
     "expo": "^25.0.0",
     "mobx": "^3.4.1",
@@ -17,6 +20,8 @@
     "react-navigation": "^1.0.0-beta.27"
   },
   "devDependencies": {
+    "eslint": "^4.18.1",
+    "eslint-config-universe": "^1.0.7",
     "jest-expo": "^25.0.0",
     "prettier": "^1.10.2",
     "reactotron-react-native": "^1.14.0"

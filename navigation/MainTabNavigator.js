@@ -1,5 +1,4 @@
 import React from 'react';
-import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { TabNavigator, TabBarBottom } from 'react-navigation';
 
@@ -31,10 +30,18 @@ export default TabNavigator(
         const { routeName } = navigation.state;
         let iconName;
         switch (routeName) {
-          case 'Home': iconName = 'md-home'; break;
-          case 'Notifications': iconName = 'md-notifications'; break;
-          case 'Jobs': iconName = 'md-briefcase'; break;
-          case 'More': iconName = 'md-more'; break;          
+          case 'Home':
+            iconName = 'md-home';
+            break;
+          case 'Notifications':
+            iconName = 'md-notifications';
+            break;
+          case 'Jobs':
+            iconName = 'md-briefcase';
+            break;
+          case 'More':
+            iconName = 'md-more';
+            break;
         }
         return (
           <Ionicons

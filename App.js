@@ -1,20 +1,16 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
-import { AppLoading, Asset, Font } from 'expo';
+import { StyleSheet, View } from 'react-native';
+import { AppLoading, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import { Provider } from 'mobx-react';
 import { Root } from 'native-base';
 import RootNavigation from './navigation/RootNavigation';
-import stores from './stores'
+import stores from './stores';
 
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
   };
-
-  componentDidMount() {
-    console.disableYellowBox = true;
-  }
 
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
@@ -65,9 +61,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-  },
-  statusBarUnderlay: {
-    height: 24,
-    backgroundColor: 'rgba(0,0,0,0.2)',
   },
 });

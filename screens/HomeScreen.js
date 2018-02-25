@@ -1,8 +1,10 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, ActivityIndicator, FlatList } from 'react-native';
+import { Text, ScrollView, TouchableOpacity, ActivityIndicator, FlatList } from 'react-native';
 import { observer, inject } from 'mobx-react';
 import { Toast } from 'native-base';
 import * as _ from 'lodash';
+
+import Banner from '../components/Homepage/Banner';
 
 @inject('hotelStore')
 @observer
@@ -36,7 +38,8 @@ export default class HomeScreen extends React.Component {
 
   render() {
     return (
-      <View>
+      <ScrollView>
+        <Banner />
         {this.state.loading ? (
           <ActivityIndicator size="large" />
         ) : (
@@ -44,7 +47,6 @@ export default class HomeScreen extends React.Component {
             keyExtractor={item => item.name}
             data={_.values(this.props.hotelStore.hotels)}
             renderItem={data => {
-              console.log(data);
               return (
                 <TouchableOpacity
                   activeOpacity={0.8}
@@ -64,7 +66,7 @@ export default class HomeScreen extends React.Component {
             removeClippedSubviews={false}
           />
         )}
-      </View>
+      </ScrollView>
     );
   }
 }

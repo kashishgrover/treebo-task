@@ -7,6 +7,8 @@ const GET_HOTEL_DETAILS_URL = Strings.baseUrl + '/5a7f265b2e00005d00b56877';
 
 export default class HotelStore {
   @observable hotels = {};
+  @observable prices = {};
+  @observable hotel = {};
 
   async fetchHotels() {
     let status;
@@ -20,6 +22,58 @@ export default class HotelStore {
       });
       status = response.status;
       const res = await response.json();
+
+      //Convert to Map for easy access eventually
+      this.hotels = res.data.reduce((obj, item) => {
+        obj[item['id']] = item;
+        return obj;
+      }, {});
+    } catch (e) {
+      console.warn(e.message);
+    }
+
+    return status;
+  }
+
+  async fetchHotelPrices() {
+    let status;
+
+    try {
+      let response = await fetch(GET_PRICES_URL, {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+      status = response.status;
+      const res = await response.json();
+
+      //Convert to Map for easy access eventually
+      this.hotels = res.data.reduce((obj, item) => {
+        obj[item['id']] = item;
+        return obj;
+      }, {});
+    } catch (e) {
+      console.warn(e.message);
+    }
+
+    return status;
+  }
+
+  async fetchHotelDetails() {
+    let status;
+
+    try {
+      let response = await fetch(GET_HOTEL_DETAILS_URL, {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+      status = response.status;
+      const res = await response.json();
+
+      //Convert to Map for easy access eventually
       this.hotels = res.data.reduce((obj, item) => {
         obj[item['id']] = item;
         return obj;

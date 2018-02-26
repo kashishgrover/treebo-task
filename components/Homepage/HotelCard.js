@@ -2,65 +2,62 @@ import React from 'react';
 import { TouchableOpacity, StyleSheet, Text, View, Image, ActivityIndicator } from 'react-native';
 import Layout from '../../constants/Layout';
 
-export default class HotelCard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.loadHotelDetails = this.loadHotelDetails.bind(this);
-  }
+// Oh my look at this. Stateless components in React Native? :D
+const HotelCard = ({ loadingPrices, loadingImages, item, navigation }) => {
+  const { image, name, price, locality } = item;
 
-  loadHotelDetails(item) {
-    this.props.navigation.navigate('Product', item);
-  }
+  const loadHotelDetails = item => {
+    navigation.navigate('Product', item);
+  };
 
-  getMinPrice(price) {
+  const getMinPrice = price => {
+    // This function gets minimum price from an object which contains
+    // keys and prices. If all are null, it will return Infinity.
     let arr = Object.values(price);
     arr = arr.filter(element => {
       return element !== null;
     });
     return Math.min(...arr);
-  }
+  };
 
-  render() {
-    const { name, city, locality, image, price } = this.props.data.item;
-    let minPrice;
-    if (price) minPrice = this.getMinPrice(price);
+  let minPrice = Infinity;
+  if (price) minPrice = getMinPrice(price);
 
-    return (
-      <TouchableOpacity
-        activeOpacity={0.8}
-        style={[styles.container, { opacity: minPrice === Infinity ? 0.8 : 1 }]}
-        onPress={() => this.loadHotelDetails(this.props.data.item)}>
-        <View style={styles.imageWrapper}>
-          {this.props.loadingImages ? (
+  return (
+    <TouchableOpacity
+      activeOpacity={0.8}
+      style={[styles.container, { opacity: minPrice === Infinity ? 0.8 : 1 }]}
+      onPress={() => loadHotelDetails(item)}>
+      <View style={styles.imageWrapper}>
+        {loadingImages ? (
+          <ActivityIndicator />
+        ) : (
+          <Image source={{ uri: image }} style={styles.image} />
+        )}
+      </View>
+      <View style={styles.metaWrap}>
+        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.h1}>
+          {name}
+        </Text>
+        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.h2}>
+          {locality}
+        </Text>
+        {loadingImages ? (
+          <View style={styles.textContainer}>
             <ActivityIndicator />
-          ) : (
-            <Image source={{ uri: image }} style={styles.image} />
-          )}
-        </View>
-        <View style={styles.metaWrap}>
-          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.h1}>
-            {name}
-          </Text>
-          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.h2}>
-            {locality}
-          </Text>
-          {this.props.loadingImages ? (
-            <View style={styles.textContainer}>
-              <ActivityIndicator />
-            </View>
-          ) : (
-            <View style={styles.textContainer}>
-              <Text style={minPrice === Infinity ? styles.soldOut : styles.price}>
-                {minPrice === Infinity ? 'SOLD OUT' : '₹ ' + minPrice}
-              </Text>
-              {minPrice !== Infinity && <Text style={styles.h2}>Incl. of all taxes</Text>}
-            </View>
-          )}
-        </View>
-      </TouchableOpacity>
-    );
-  }
-}
+          </View>
+        ) : (
+          <View style={styles.textContainer}>
+            <Text style={minPrice === Infinity ? styles.soldOut : styles.price}>
+              {minPrice === Infinity ? 'SOLD OUT' : '₹ ' + minPrice}
+            </Text>
+            {minPrice !== Infinity && <Text style={styles.h2}>Incl. of all taxes</Text>}
+          </View>
+        )}
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 const leftWidth = Layout.window.width * 0.41;
 
@@ -114,3 +111,5 @@ const styles = StyleSheet.create({
     marginTop: 32,
   },
 });
+
+export default HotelCard;

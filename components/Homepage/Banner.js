@@ -2,26 +2,24 @@ import React from 'react';
 import { View, Image, StyleSheet, Text } from 'react-native';
 import Layout from '../../constants/Layout';
 
-export default class Banner extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.backgroundContainer}>
-          <Image
-            source={require('../../assets/images/homepage-banner.jpg')}
-            style={styles.backdrop}
-            resizeMode="cover"
-          />
-        </View>
-        <Image source={require('../../assets/images/splash-white.png')} style={styles.logo} />
-        <View style={styles.textContainer}>
-          <Text style={styles.h1}>India's Top Rated Hotel Chain</Text>
-          <Text style={styles.h2}>Good rooms. Good Service. Good Prices.</Text>
-        </View>
+const Banner = () => {
+  return (
+    <View style={styles.container}>
+      <View style={styles.backgroundContainer}>
+        <Image
+          source={require('../../assets/images/homepage-banner.jpg')}
+          style={styles.backdrop}
+          resizeMode="cover"
+        />
       </View>
-    );
-  }
-}
+      <Image source={require('../../assets/images/splash-white.png')} style={styles.logo} />
+      <View style={styles.textContainer}>
+        <Text style={styles.h1}>India's Top Rated Hotel Chain</Text>
+        <Text style={styles.h2}>Good rooms. Good Service. Good Prices.</Text>
+      </View>
+    </View>
+  );
+};
 
 const HEIGHT = Layout.window.height / 1.8;
 const WIDTH = Layout.window.width;
@@ -65,3 +63,5 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
+
+export default Banner;

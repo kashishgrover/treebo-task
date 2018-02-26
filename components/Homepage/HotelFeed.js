@@ -19,7 +19,13 @@ export default class HotelFeed extends React.Component {
     this.hotels = [];
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
+    await this.getList();
+    await this.getPrices();
+    await this.getImages();
+  }
+
+  async getList() {
     try {
       let res = await this.props.hotelStore.fetchHotels();
       if (res === 200) {
@@ -35,40 +41,36 @@ export default class HotelFeed extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this.props.hotelStore
-      .fetchHotelPrices()
-      .then(res => {
-        if (res === 200) {
-          this.setState({
-            loadingPrices: false,
-          });
-        }
-      })
-      .catch(e => {
-        console.warn(e);
+  async getPrices() {
+    try {
+      let res = await this.props.hotelStore.fetchHotelPrices();
+      if (res === 200) {
+        this.setState({ loadingPrices: false });
+      } else {
         Toast.show({
           text: "An error occurred while loading. :'(",
           type: 'warning',
         });
-      });
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  }
 
-    this.props.hotelStore
-      .fetchHotelImages()
-      .then(res => {
-        if (res === 200) {
-          this.setState({
-            loadingImages: false,
-          });
-        }
-      })
-      .catch(e => {
-        console.warn(e);
+  async getImages() {
+    try {
+      let res = await this.props.hotelStore.fetchHotelImages();
+      if (res === 200) {
+        this.setState({ loadingImages: false });
+      } else {
         Toast.show({
           text: "An error occurred while loading. :'(",
           type: 'warning',
         });
-      });
+      }
+    } catch (err) {
+      console.warn(err);
+    }
   }
 
   render() {
@@ -82,7 +84,7 @@ export default class HotelFeed extends React.Component {
           <HotelCard
             loadingPrices={this.state.loadingPrices}
             loadingImages={this.state.loadingImages}
-            data={data}
+            item={data.item}
             navigation={this.props.navigation}
           />
         )}

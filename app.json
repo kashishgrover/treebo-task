@@ -20,6 +20,9 @@
     },
     "ios": {
       "supportsTablet": false
+    },
+    "android": {
+      "package": "com.kashish.treebotask"
     }
   }
 }

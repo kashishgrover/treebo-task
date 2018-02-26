@@ -99,7 +99,7 @@ export default class HotelStore {
   }
 
   async fetchHotelDetails() {
-    let status;
+    let data = {};
 
     try {
       let response = await fetch(GET_HOTEL_DETAILS_URL, {
@@ -108,18 +108,12 @@ export default class HotelStore {
           Accept: 'application/json',
         },
       });
-      status = response.status;
-      const res = await response.json();
-
-      //Convert to Map for easy access eventually
-      this.hotels = res.data.reduce((obj, item) => {
-        obj[item['id']] = item;
-        return obj;
-      }, {});
+      let res = await response.json();
+      data = res.data;
     } catch (e) {
       console.warn(e.message);
     }
 
-    return status;
+    return data;
   }
 }

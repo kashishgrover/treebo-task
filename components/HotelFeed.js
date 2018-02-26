@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity, ActivityIndicator, FlatList } from 'react-native';
+import { ActivityIndicator, FlatList } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import { Toast } from 'native-base';
 import * as _ from 'lodash';

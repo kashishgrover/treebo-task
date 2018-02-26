@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text, View, Image, ActivityIndicator } from 'react-native';
-import Layout from '../../constants/Layout';
+import Layout from '../constants/Layout';
 
 // Oh my look at this. Stateless components in React Native? :D
 const HotelCard = ({ loadingPrices, loadingImages, item, navigation }) => {

@@ -6,8 +6,8 @@ import Layout from '../constants/Layout';
 const HotelCard = ({ loadingPrices, loadingImages, item, navigation }) => {
   const { image, name, price, locality } = item;
 
-  const loadHotelDetails = item => {
-    navigation.navigate('Product', item);
+  const loadHotelDetails = id => {
+    navigation.navigate('Product', id);
   };
 
   const getMinPrice = price => {
@@ -27,7 +27,7 @@ const HotelCard = ({ loadingPrices, loadingImages, item, navigation }) => {
     <TouchableOpacity
       activeOpacity={0.8}
       style={styles.container}
-      onPress={() => loadHotelDetails(item)}>
+      onPress={() => loadHotelDetails(item.id)}>
       <View
         style={[
           styles.imageWrapper,

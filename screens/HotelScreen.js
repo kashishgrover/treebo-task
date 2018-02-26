@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, ScrollView, View, Image, StyleSheet } from 'react-native';
+import { Toast } from 'native-base';
 import { inject, observer } from 'mobx-react';
 
 import Layout from '../constants/Layout';
@@ -15,17 +16,35 @@ export default class HotelScreen extends React.Component {
     this.state = {
       loading: true,
     };
+    this.id = this.props.navigation.state.params;
+    this.details = {};
   }
 
   async componentDidMount() {
-    let res = await this.props.hotelStore.fetchHotelDetails();
-    alert(JSON.stringify(res));
+    await this.getDetails();
+  }
+
+  async getDetails() {
+    try {
+      let res = await this.props.hotelStore.fetchHotelDetails();
+      if (res) {
+        this.details = res;
+        this.setState({ loading: false });
+      } else {
+        Toast.show({
+          text: "An error occurred while loading. :'(",
+          type: 'warning',
+        });
+      }
+    } catch (err) {
+      console.warn(err);
+    }
   }
 
   render() {
-    const { name, locality, image, price } = this.props.navigation.state.params;
+    const { name, locality, image, price } = this.props.hotelStore.hotels[this.id];
 
-    //This is just a demo -- The actual dates will obviously be passed as props :)
+    //This is just a demo -- The actual dates would be passed as props :)
     let today = new Date();
     let dd1 = today.getDate();
     let MM1 = months[today.getMonth()];

@@ -55,13 +55,13 @@ export default class HotelScreen extends React.Component {
   }
 
   render() {
-    const { name, locality, image, price } = this.props.hotelStore.hotels[this.id];
+    const { name, locality, image, price, city } = this.props.hotelStore.hotels[this.id];
 
     return (
       <View>
         <Header
           navigation={this.props.navigation}
-          h1={`Treebo ${name}, ${locality}`}
+          h1={`Treebo ${name}, ${locality ? locality : city}`}
           h2={`${dd1} ${MM1} - ${dd2} ${MM2}`}
         />
         <ScrollView style={styles.container}>

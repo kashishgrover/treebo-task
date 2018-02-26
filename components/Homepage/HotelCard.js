@@ -26,9 +26,13 @@ const HotelCard = ({ loadingPrices, loadingImages, item, navigation }) => {
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      style={[styles.container, { opacity: minPrice === Infinity ? 0.8 : 1 }]}
+      style={styles.container}
       onPress={() => loadHotelDetails(item)}>
-      <View style={styles.imageWrapper}>
+      <View
+        style={[
+          styles.imageWrapper,
+          { opacity: !loadingImages && minPrice === Infinity ? 0.5 : 1 },
+        ]}>
         {loadingImages ? (
           <ActivityIndicator />
         ) : (
